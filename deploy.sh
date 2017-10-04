@@ -1,12 +1,12 @@
 #!/bin/bash
-docker build -t kostyaurysov/sample-node .
-docker push kostyaurysov/sample-node
+docker build -t valenzione/sample-node .
+docker push valenzione/sample-node
 
-ssh deploy@35.187.30.81 << EOF
-docker pull kostyaurysov/sample-node:latest
+ssh  -i ~/.ssh/identity snyderino@35.202.98.145 << EOF
+docker pull valenzione/sample-node:latest
 docker stop web || true
 docker rm web || true
-docker rmi kostyaurysov/sample-node:current || true
-docker tag kostyaurysov/sample-node:latest kostyaurysov/sample-node:current
-docker run -d --net app --restart always --name web -p 80:80 kostyaurysov/sample-node:current
+docker rmi valenzione/sample-node:current || true
+docker tag valenzione/sample-node:latest valenzione/sample-node:current
+docker run -d --net app --restart always --name web -p 80:80 valenzione/sample-node:current
 EOF
